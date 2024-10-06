@@ -1,0 +1,71 @@
+import tkinter as tk
+from PIL import ImageTk, Image
+
+window = tk.Tk()
+window.title("Create Account")
+window.resizable(False, False)
+
+window_width = 1250
+window_height = 550
+
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
+
+center_x = int(screen_width / 2 - window_width / 2)
+center_y = int(screen_height / 2 - window_height / 2)
+
+window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
+frame_width = int(window_width * 3 / 5)
+frame_height = window_height
+first_frame = tk.Frame(window, bg='red', width=frame_width, height=frame_height)
+first_frame.place(x=0, y=0)
+
+image = Image.open("car.jpg")
+image = image.resize((frame_width, frame_height))
+image = ImageTk.PhotoImage(image)
+
+image_label = tk.Label(first_frame, image = image)
+image_label.place(relwidth=1, relheight=1)
+
+second_frame_width = window_width - frame_width
+second_frame = tk.Frame(window, bg='white')
+second_frame.place(x=frame_width, y=0, width = 500, height = 600)
+
+create_account_label = tk.Label(second_frame, text="CREATE ACCOUNT", font=("Arial", 18))
+create_account_label.grid(row=0, column=1, columnspan=2, pady=15)
+
+name_label = tk.Label(second_frame, text="Name", font = ("Arial, 15"))
+name_label.grid(row=1, column=0, padx=10, pady=15)
+
+name_input = tk.Entry(second_frame, font= ("Arial,15"), width= 30)
+name_input.grid(row=1, column=1, padx=10, pady=15)
+
+username_label = tk.Label(second_frame, text="Username", font= ("Arial,15"))
+username_label.grid(row=2, column=0, padx=10, pady=17)
+
+username_input = tk.Entry(second_frame, font= ("Arial,13"), width= 30)
+username_input.grid(row=2, column=1, padx=10, pady=17)
+
+email_label = tk.Label(second_frame, text="Email", font= ("Arial,13"))
+email_label.grid(row=3, column=0, padx=10, pady=17)
+
+email_input = tk.Entry(second_frame, font= ("Arial,13"), width= 30)
+email_input.grid(row=3, column=1, padx=10, pady=17)
+
+password_label = tk.Label(second_frame, text="Password", font= ("Arial,13"))
+password_label.grid(row=4, column=0, padx=10, pady=17)
+
+password_input = tk.Entry(second_frame, show="*", font= ("Arial,13"), width= 30)
+password_input.grid(row=4, column=1, padx=10, pady=17)
+
+confirm_password_label = tk.Label(second_frame, text="Confirm Password", font= ("Arial,13"))
+confirm_password_label.grid(row=5, column=0, padx=10, pady=17)
+
+confirm_password_input = tk.Entry(second_frame, show="*", font= ("Arial,13"), width= 30)
+confirm_password_input.grid(row=5, column=1, padx=10, pady=17)
+
+create_account_button = tk.Button(second_frame, text="Create Account", font= ("Arial,13"))
+create_account_button.grid(row=6, column=1, columnspan=2, padx=10, pady=17)
+
+window.mainloop()
