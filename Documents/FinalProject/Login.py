@@ -23,13 +23,11 @@ class Login:
         first_frame = tk.Frame(self.window, bg='red', width=frame_width, height=frame_height)
         first_frame.place(x=0, y=0)
 
-        # Load and resize the image to fit the red frame
         image = Image.open("carLoginPic.jpg")
         image = image.resize((frame_width, frame_height))
-        image = ImageTk.PhotoImage(image)
+        self.image = ImageTk.PhotoImage(image)
 
-        # Create a label to display the image and expand it to cover the entire frame
-        image_label = tk.Label(first_frame, image=image)
+        image_label = tk.Label(first_frame, image=self.image)
         image_label.place(relwidth=1, relheight=1)
 
         second_frame_width = window_width - frame_width
@@ -54,5 +52,10 @@ class Login:
         pass_input = tk.Entry(second_frame, show="*")
         pass_input.grid(row=3, column=1, pady=5, padx=10)
 
+        login_button = tk.Button(second_frame, text="Login", font=("Arial", 13))
+        login_button.grid(row=10, column=1, columnspan=2, padx=10, pady=17)
+
         self.window.mainloop()
 
+if __name__ == "__main__":
+    Login()
