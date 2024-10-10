@@ -1,0 +1,79 @@
+import tkinter as tk
+from tkinter import ttk
+
+class Customer_Details:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("Rental Information")
+        self.window.resizable(True, True)
+
+        window_width = 1050
+        window_height = 550
+
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+
+        center_x = int(screen_width / 2 - window_width / 2)
+        center_y = int(screen_height / 2 - window_height / 2)
+
+        self.window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
+        tk.Label(self.window, text="Customer's Name ", font= ("Times", 12)).grid(row=0, column=0)
+        name_entry = tk.Entry(self.window, width= 25)
+        name_entry.grid(row=0, column=1, pady=15)
+
+        tk.Label(self.window, text="Contact Number ", font= ("Times", 12)).grid(row=1, column=0)
+        contact_entry = tk.Entry(self.window, width=25)
+        contact_entry.grid(row=1, column=1, pady=15)
+
+        tk.Label(self.window, text="Type of Vehicle ", font= ("Times", 12)).grid(row=2, column=0)
+        vehicle_types = ["Honda BR-V", "Honda HR-V", "Honda Brio", "Honda Civic", "Toyota Hilux",
+                         "Toyota Innova MPV", "Toyota Wigo G-CVT", "Toyota Tundra", "Toyota Sienna"
+                         "Toyota Camry", "Honda CR-V", "Ford Fusion", "Ford Explorer", "Kia Carnival"
+                         "Honda Odyssey", "Ford Transit", "Mercedes-Benz Sprinter", "Chevrolet Express", "Nissan Livina"                                                           
+                         "Ford Everest","Ford Everest Titanium", "Nissan NV350", "Chevrolet Equinnox",
+                         "Chevloret Colorado Z71", "Mercedes-Benz EQV", "GMC Savana", "Rivian R1T", "Honda Freed",
+                         "Chrysler Pacifica Pinnacle", "Mitsubishi Xpander MVP", "Mitsubishi Mirage"
+
+
+
+                         ]
+        vehicle_combobox = ttk.Combobox(self.window, values=vehicle_types, width=23, font= ("Times", 10))
+        vehicle_combobox.grid(row=2, column=1, pady=15)
+
+
+        tk.Label(self.window, text="Rent Date ", font= ("Times", 12)).grid(row=3, column=0)
+        date_entry = tk.Entry(self.window, width=25)
+        date_entry.grid(row=3, column=1, pady=15)
+
+        tk.Label(self.window, text="Rent Due ", font= ("Times", 12)).grid(row=4, column=0)
+        due_entry = tk.Entry(self.window, width=25)
+        due_entry.grid(row=4, column=1, pady=15)
+
+        tk.Label(self.window, text="Days Rented ", font= ("Times", 12)).grid(row=5, column=0)
+        day_rent_entry = tk.Entry(self.window, width=25)
+        day_rent_entry.grid(row=5, column=1, pady=15)
+
+        tk.Label(self.window, text="Cost per day  ", font= ("Times", 12)).grid(row=6, column=0)
+        cost_entry = tk.Entry(self.window, width= 25)
+        cost_entry.grid(row=6,column=1, pady=15)
+        cost_entry.insert(0,"4120")
+
+        tk.Label(self.window, text="Total: ", font= ("Times", 12)).grid(row=7, column=0)
+        total_label = tk.Label(self.window, width=25)
+        total_label.grid(row=7, column=1, pady=15)
+
+
+        def sumbit():
+            day_rent = int(day_rent_entry.get())
+            cost = int(cost_entry.get())
+            total_cost = day_rent * cost
+            total_label.config(text=f"Total Cost: ₱{total_cost:,}")
+
+        button = tk.Button(self.window,text="Enter",command=sumbit)
+        button.config(height=2,width=4)
+        button.grid(row=9, column=1,columnspan=3, pady=6)
+
+        self.window.mainloop()
+
+Customer_Details()
