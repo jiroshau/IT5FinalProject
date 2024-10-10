@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
-from Login import Login
+from Database import Database
 
 class Register:
     def __init__(self):
@@ -51,12 +51,6 @@ class Register:
         self.username_input = tk.Entry(second_frame, font=("Arial", 10), width=30)
         self.username_input.grid(row=2, column=1, padx=10, pady=17)
 
-        email_label = tk.Label(second_frame, text="Email", font=("Sans", 10), bg='white')
-        email_label.grid(row=3, column=0, padx=10, pady=17)
-
-        self.email_input = tk.Entry(second_frame, font=("Arial", 10), width=30)
-        self.email_input.grid(row=3, column=1, padx=10, pady=17)
-
         password_label = tk.Label(second_frame, text="Password", font=("Sans", 10), bg='white')
         password_label.grid(row=4, column=0, padx=10, pady=17)
 
@@ -69,15 +63,25 @@ class Register:
         self.confirm_password_input = tk.Entry(second_frame, show="*", font=("Arial", 10), width=30)
         self.confirm_password_input.grid(row=5, column=1, padx=10, pady=15)
 
-        create_account_button = tk.Button(second_frame, text="Create Account", font=("Arial", 13))
+        create_account_button = tk.Button(second_frame, text="Create Account", font=("Arial", 13), command=self.create_account)
         create_account_button.grid(row=6, column=1, columnspan=2, padx=10, pady=17)
 
         self.window.mainloop()
 
-    def open_login(self, event):
-        self.window.destroy
-        login_window = Login()
-        login_window.window.mainloop()
+    def create_account(self):
+        name = self.name_input.get()
+        username = self.username_input.get()
+        password = self.password_input.get()
+        confirm_password = self.confirm_password_input.get()
 
-if __name__ == "__main__":
-    Register()
+        if password == confirm_password:
+            from Login import Login
+            db = Database('localhost', 'root', '', 'final_project')
+            db.register(name, username, password)
+            self.window.destroy()
+            login_window = Login()
+            login_window.window.mainloop()
+        else:
+            error_message = "Passwords do not match"
+            tk.Label(self.window, text=error_message).pack()
+

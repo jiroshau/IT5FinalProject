@@ -1,7 +1,8 @@
 from Database import Database
 from Login import Login
-from Register import Register
 
-#db = Database('localhost', 'root', '', 'final_project')
-Login()
+def main(self):
+    db = Database('localhost', 'root', '', 'final_project')
+    login_window = Login()
+    login_window.window.mainloop()
 

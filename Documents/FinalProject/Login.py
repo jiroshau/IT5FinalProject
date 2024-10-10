@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
-from Register import Register
+
 
 class Login:
     def __init__(self):
@@ -53,7 +53,7 @@ class Login:
         self.pass_input = tk.Entry(second_frame, show="*")
         self.pass_input.grid(row=3, column=1, pady=5, padx=10)
 
-        login_button = tk.Button(second_frame, text="Login", font=("Arial", 13))
+        login_button = tk.Button(second_frame, text="Login", font=("Arial", 13), command=self.login)
         login_button.grid(row=10, column=1, columnspan=2, padx=10, pady=17)
 
         register_label = tk.Label(second_frame, text="Register", fg="blue", cursor="hand2")
@@ -62,15 +62,9 @@ class Login:
 
         self.window.mainloop()
 
+
     def open_register(self, event):
         self.window.destroy()
+        import Register
         register_window = Register()
         register_window.window.mainloop()
-
-    def login(self):
-        user = self.user_input.get()
-        password = self.pass_input.get()      
-
-    def get_user(self):
-        user = self.user_input.get()
-        return user
