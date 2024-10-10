@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from PIL import ImageTk, Image
 from Database import Database
 
@@ -21,7 +22,7 @@ class Login:
 
         frame_width = int(window_width * 3 / 5)
         frame_height = window_height
-        first_frame = tk.Frame(self.window, bg='red', width=frame_width, height=frame_height)
+        first_frame = tk.Frame(self.window, bg='#ff0000', width=frame_width, height=frame_height)
         first_frame.place(x=0, y=0)
 
         image = Image.open("carLoginPic.jpg")
@@ -32,33 +33,36 @@ class Login:
         image_label.place(relwidth=1, relheight=1)
 
         second_frame_width = window_width - frame_width
-        second_frame = tk.Frame(self.window, bg='white', width=second_frame_width, height=frame_height)
+        second_frame = tk.Frame(self.window, bg='#ffffff', width=second_frame_width, height=frame_height)
         second_frame.place(x=frame_width, y=0)
 
-        welcome_back_label = tk.Label(second_frame, text="WELCOME BACK", bg='white')
-        welcome_back_label.grid(row=0, column=0, pady=10, padx=10)
+        canvas = tk.Canvas(second_frame, width=second_frame_width, height=frame_height, bg='#ffffff', highlightthickness=0)
+        canvas.pack(fill='both', expand=True)
 
-        login_label = tk.Label(second_frame, text="Login", bg='white')
-        login_label.grid(row=1, column=0, pady=5, padx=10)
+        welcome_back_label = tk.Label(canvas, text="WELCOME BACK", font=("Arial", 18), bg='#ffffff')
+        welcome_back_label.place(relx=0.5, rely=0.1, anchor='center')
 
-        user_label = tk.Label(second_frame, text="Username", bg='white')
-        user_label.grid(row=2, column=0, pady=5, padx=10)
+        login_label = tk.Label(canvas, text="Login", font=("Arial", 14), bg='#ffffff')
+        login_label.place(relx=0.5, rely=0.2, anchor='center')
 
-        self.user_input = tk.Entry(second_frame)
-        self.user_input.grid(row=2, column=1, pady=5, padx=10)
+        user_label = tk.Label(canvas, text="Username", font=("Arial", 12), bg='#ffffff')
+        user_label.place(relx=0.5, rely=0.3, anchor='center')
 
-        pass_label = tk.Label(second_frame, text="Password", bg='white', font="Sans")
-        pass_label.grid(row=3, column=0, pady=5, padx=10)
+        self.user_input = tk.Entry(canvas, font=("Arial", 12), width=30)
+        self.user_input.place(relx=0.5, rely=0.35, anchor='center')
 
-        self.pass_input = tk.Entry(second_frame, show="*")
-        self.pass_input.grid(row=3, column=1, pady=5, padx=10)
+        pass_label = tk.Label(canvas, text="Password", font=("Arial", 12), bg='#ffffff')
+        pass_label.place(relx=0.5, rely=0.4, anchor='center')
 
-        login_button = tk.Button(second_frame, text="Login", font=("Arial", 13), command=self.login)
-        login_button.grid(row=10, column=1, columnspan=2, padx=10, pady=17)
+        self.pass_input = tk.Entry(canvas, show="*", font=("Arial", 12), width=30)
+        self.pass_input.place(relx=0.5, rely=0.45, anchor='center')
 
-        register_label = tk.Label(second_frame, text="Register", fg="blue", cursor="hand2")
+        login_button = tk.Button(canvas, text="Login", font=("Arial", 12), bg='#ff0000', fg='#ffffff', command=self.login)
+        login_button.place(relx=0.5, rely=0.5, anchor='center')
+
+        register_label = tk.Label(canvas, text="Don't have an account? Register here", font=("Arial", 10), bg='#ffffff', fg='#0000ff', cursor="hand2")
         register_label.bind("<Button-1>", self.open_register)
-        register_label.grid(row=11, column=0)
+        register_label.place(relx=0.5, rely=0.55, anchor='center')
 
         self.window.mainloop()
 
@@ -75,5 +79,9 @@ class Login:
         result = db.login(user, password)
         if result:
             print("Login successful")
+            self.window.destroy()
+            import Register
+            register_window = Register.Register()
+            register_window.window.mainloop()
         else:
-            print("Invalid username or password")
+            messagebox.showerror("Error", "Incorrect username or password")
