@@ -1,8 +1,6 @@
 import mysql.connector
 
 class Database:
-    __user = None
-
     def __init__(self, host, user, password, database):
         self.host = host
         self.user = user
@@ -18,13 +16,12 @@ class Database:
         self.cursor = self.db.cursor()
 
     def register(self, name, username, password):
-        sql = f"INSERT INTO users (name, username, password) VALUES ('{name}', '{username}', '{password}')"
-        self.cursor.execute(sql)
+        sql = "INSERT INTO users (name, username, password) VALUES (%s, %s, %s)"
+        self.cursor.execute(sql, (name, username, password))
         self.db.commit()
 
     def login(self, username, password):
-        sql = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-        self.cursor.execute(sql)
+        sql = "SELECT * FROM users WHERE username = %s AND password = %s"
+        self.cursor.execute(sql, (username, password))
         user = self.cursor.fetchone()
-        self.__user = user
         return user

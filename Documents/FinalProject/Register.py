@@ -66,7 +66,17 @@ class Register:
         create_account_button = tk.Button(second_frame, text="Create Account", font=("Arial", 13), command=self.create_account)
         create_account_button.grid(row=6, column=1, columnspan=2, padx=10, pady=17)
 
+        login_label = tk.Label(second_frame, text="Login", fg="blue", cursor="hand2")
+        login_label.bind("<Button-1>", self.open_login)
+        login_label.grid(row=11, column=0)
+
         self.window.mainloop()
+
+    def open_login(self, event):
+        self.window.destroy()
+        import Login
+        register_window = Login.Login()
+        register_window.window.mainloop()
 
     def create_account(self):
         name = self.name_input.get()
@@ -75,13 +85,12 @@ class Register:
         confirm_password = self.confirm_password_input.get()
 
         if password == confirm_password:
-            from Login import Login
             db = Database('localhost', 'root', '', 'final_project')
             db.register(name, username, password)
             self.window.destroy()
-            login_window = Login()
+            import Login
+            login_window = Login.Login()
             login_window.window.mainloop()
         else:
             error_message = "Passwords do not match"
             tk.Label(self.window, text=error_message).pack()
-

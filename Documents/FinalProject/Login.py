@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
-
+from Database import Database
 
 class Login:
     def __init__(self):
@@ -62,9 +62,18 @@ class Login:
 
         self.window.mainloop()
 
-
     def open_register(self, event):
         self.window.destroy()
         import Register
-        register_window = Register()
+        register_window = Register.Register()
         register_window.window.mainloop()
+
+    def login(self):
+        db = Database('localhost', 'root', '', 'final_project')
+        user = self.user_input.get()
+        password = self.pass_input.get()
+        result = db.login(user, password)
+        if result:
+            print("Login successful")
+        else:
+            print("Invalid username or password")
