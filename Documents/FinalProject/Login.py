@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+from Register import Register
 
 class Login:
     def __init__(self):
@@ -43,19 +44,33 @@ class Login:
         user_label = tk.Label(second_frame, text="Username", bg='white')
         user_label.grid(row=2, column=0, pady=5, padx=10)
 
-        user_input = tk.Entry(second_frame)
-        user_input.grid(row=2, column=1, pady=5, padx=10)
+        self.user_input = tk.Entry(second_frame)
+        self.user_input.grid(row=2, column=1, pady=5, padx=10)
 
         pass_label = tk.Label(second_frame, text="Password", bg='white', font="Sans")
         pass_label.grid(row=3, column=0, pady=5, padx=10)
 
-        pass_input = tk.Entry(second_frame, show="*")
-        pass_input.grid(row=3, column=1, pady=5, padx=10)
+        self.pass_input = tk.Entry(second_frame, show="*")
+        self.pass_input.grid(row=3, column=1, pady=5, padx=10)
 
         login_button = tk.Button(second_frame, text="Login", font=("Arial", 13))
         login_button.grid(row=10, column=1, columnspan=2, padx=10, pady=17)
 
+        register_label = tk.Label(second_frame, text="Register", fg="blue", cursor="hand2")
+        register_label.bind("<Button-1>", self.open_register)
+        register_label.grid(row=11, column=0)
+
         self.window.mainloop()
 
-if __name__ == "__main__":
-    Login()
+    def open_register(self, event):
+        self.window.destroy()
+        register_window = Register()
+        register_window.window.mainloop()
+
+    def login(self):
+        user = self.user_input.get()
+        password = self.pass_input.get()      
+
+    def get_user(self):
+        user = self.user_input.get()
+        return user
